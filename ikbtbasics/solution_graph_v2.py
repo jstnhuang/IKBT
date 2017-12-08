@@ -63,6 +63,7 @@ def find_edge(child, graph):
     
 def related(start_node, end_node):
     '''DFS: return True if a path exists, for Node types'''
+    
     s = []
     s.append(start_node)
     
@@ -128,6 +129,8 @@ class Node:
                 for par in self.parents:
                     for other_par in self.parents:
                         if par != other_par and related(par, other_par):
+                            # need to add the case that thxy and thx is related
+                            # even if thxy and thx were seperatly solved
                             self.upper_level_parents.add(other_par)
                 # convert to list
                 self.upper_level_parents = list(self.upper_level_parents)
