@@ -80,6 +80,20 @@ def related(start_node, end_node):
             s.extend(next_steps)
     return False
 
+
+def back_track(curr_node):
+    # find all ancestors of curr_node
+    curr = curr_node
+    ancestors_stack = []
+    i = 0
+    while (len(curr.parents) > 0):
+        ancestors_stack.extend(curr.parents)
+        curr = ancestors_stack[i]
+        i += 1
+
+    return ancestors_stack
+
+
 def find_common_ancestor(node1, node2):
     #pass
 
@@ -87,11 +101,19 @@ def find_common_ancestor(node1, node2):
     # directly related: a path exists between those two
     common_ancestor = None
     if len(node1.parents) == 0:
-        common_ancestor = node1
+        return node1
     elif len(node2.parents) == 0:
-        common_ancestor = node2
+        return node2
 
-    
+    # closest ancestors are in the front, root at the end
+    ancestors_stack1 = back_track(node1)
+    ancestors_stack2 = back_track(node2)
+
+
+
+
+
+
 
     
 class Node:
@@ -190,31 +212,35 @@ class Node:
             # (find the deepest level of parents and) get product of parents
             # getting the product is safe here because we already
             # trimmed the infeasible pairs from last step (redundency detection)
-            parents_notation_list = []
             
-            if len(self.parents) == 1: 
-                # convert to single symbol to list
-                for one_sym in self.parents[0].sol_notations:
-                    parents_notation_list.append([one_sym])
-            elif len(self.parents) == 2:
-                parents_notation_list = itt.product(self.parents[0].sol_notations, \
-                                        self.parents[1].sol_notations)
-            elif len(self.parents) == 3:
-                parents_notation_list = itt.product(self.parents[0].sol_notations, \
-                                        self.parents[1].sol_notations, \
-                                        self.parents[2].sol_notations)
-            elif len(self.parents) == 4:
-                parents_notation_list = itt.product(self.parents[0].sol_notations, \
-                                        self.parents[1].sol_notations, \
-                                        self.parents[2].sol_notations, \
-                                        self.parents[3].sol_notations)
-            elif len(self.parents) == 5:
-                parents_notation_list = itt.product(self.parents[0].sol_notations, \
-                                        self.parents[1].sol_notations, \
-                                        self.parents[2].sol_notations, \
-                                        self.parents[3].sol_notations, \
-                                        self.parents[4].sol_notations)
+
+            # parents_notation_list = []
             
+            
+            # if len(self.parents) == 1: 
+            #     # convert to single symbol to list
+            #     for one_sym in self.parents[0].sol_notations:
+            #         parents_notation_list.append([one_sym])
+            # elif len(self.parents) == 2:
+            #     parents_notation_list = itt.product(self.parents[0].sol_notations, \
+            #                             self.parents[1].sol_notations)
+            # elif len(self.parents) == 3:
+            #     parents_notation_list = itt.product(self.parents[0].sol_notations, \
+            #                             self.parents[1].sol_notations, \
+            #                             self.parents[2].sol_notations)
+            # elif len(self.parents) == 4:
+            #     parents_notation_list = itt.product(self.parents[0].sol_notations, \
+            #                             self.parents[1].sol_notations, \
+            #                             self.parents[2].sol_notations, \
+            #                             self.parents[3].sol_notations)
+            # elif len(self.parents) == 5:
+            #     parents_notation_list = itt.product(self.parents[0].sol_notations, \
+            #                             self.parents[1].sol_notations, \
+            #                             self.parents[2].sol_notations, \
+            #                             self.parents[3].sol_notations, \
+            #                             self.parents[4].sol_notations)
+            
+            # need to write new parents notation list finding that works with common-ancestor
 
 
 
