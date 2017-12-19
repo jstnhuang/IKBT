@@ -109,10 +109,15 @@ def find_common_ancestor(node1, node2):
     ancestors_stack1 = back_track(node1)
     ancestors_stack2 = back_track(node2)
 
+    # for testing
+    print "ancestor stacks"
+    print ancestors_stack1
+    print ancestors_stack2
+
     for curr1 in ancestors_stack1:
         if curr1 in ancestors_stack2:
             return curr1
-            
+
     return None
 
 
