@@ -99,7 +99,7 @@ def find_common_ancestor(node1, node2):
 
     # this is only in effect when two nodes are not directly related
     # directly related: a path exists between those two
-    common_ancestor = None
+    
     if len(node1.parents) == 0:
         return node1
     elif len(node2.parents) == 0:
@@ -109,7 +109,11 @@ def find_common_ancestor(node1, node2):
     ancestors_stack1 = back_track(node1)
     ancestors_stack2 = back_track(node2)
 
-
+    for curr1 in ancestors_stack1:
+        if curr1 in ancestors_stack2:
+            return curr1
+            
+    return None
 
 
 
