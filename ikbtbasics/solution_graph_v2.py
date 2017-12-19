@@ -81,7 +81,17 @@ def related(start_node, end_node):
     return False
 
 def find_common_ancestor(node1, node2):
-    pass
+    #pass
+
+    # this is only in effect when two nodes are not directly related
+    # directly related: a path exists between those two
+    common_ancestor = None
+    if len(node1.parents) == 0:
+        common_ancestor = node1
+    elif len(node2.parents) == 0:
+        common_ancestor = node2
+
+    
 
     
 class Node:
