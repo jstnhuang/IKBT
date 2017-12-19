@@ -80,6 +80,9 @@ def related(start_node, end_node):
             s.extend(next_steps)
     return False
 
+def find_common_ancestor(node1, node2):
+    pass
+
     
 class Node:
     '''Node is a temp class, will be integrate into unknown/variable, or inhirit from it'''
