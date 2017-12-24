@@ -223,7 +223,11 @@ class Node:
             # trimmed the infeasible pairs from last step (redundency detection)
             
 
+            if len(self.parents) > 1:
+                common_ancestor = find_common_ancestor()
+            
             # parents_notation_list = []
+            
             
             
             # if len(self.parents) == 1: 
