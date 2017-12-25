@@ -94,7 +94,7 @@ def related_notation(start, end, graph):
         if curr == end:
             return True
         else:
-            # edge dir: child -> parent
+            # edge dir: child -> parent; find the next level parents
             next_steps = find_edge(curr, graph)
             s.extend(next_steps)
             
@@ -117,6 +117,7 @@ def back_track(curr_node):
 
 def find_common_ancestor(node1, node2):
     #pass
+    
 
     # this is only in effect when two nodes are not directly related
     # directly related: a path exists between those two
@@ -145,7 +146,7 @@ def find_all_goals(start, goal_notations, graph):
     '''find all possible goal notations'''
     possible_goals = []
     for goal in goal_notations:
-        if related_notation(start, goal) or related_notation(goal, start):
+        if related_notation(start, goal, graph) or related_notation(goal, start, graph):
             possible_goals.append(goal)
             
     return possible_goals
@@ -272,7 +273,10 @@ class Node:
                 parent1 = self.parents[1]
                 common_ancestor = find_common_ancestor(parent0, parent1)
                 
-                for p
+                parent0_notations = find_all_goals(common_ancestor, parent0.sol_notations, R.notation_graph)
+                parent1_notations = find_all_goals(common_ancestor, parent1.sol_notations, R.notation_graph)
+                
+                parents_notation_list = itt.product(parent0_notations, parent1_notations)
                 
                 
             # elif len(self.parents) == 2:
