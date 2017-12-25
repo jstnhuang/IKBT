@@ -53,8 +53,7 @@ def goal_search(start, parent_notations, graph):
             
     return None
     
-def find_all_goals(start, goal_notations, graph):
-    pass
+ 
         
 def find_edge(child, graph):
     next_level = []
@@ -66,7 +65,7 @@ def find_edge(child, graph):
     
 def related(start_node, end_node):
     '''DFS: return True if a path exists, for Node types'''
-    
+    '''search direction: child -> parents'''
     s = []
     s.append(start_node)
     
@@ -82,6 +81,25 @@ def related(start_node, end_node):
             next_steps = curr.parents
             s.extend(next_steps)
     return False
+    
+def related_notation(start, end, graph):
+    '''DFS: returns True if a path exists between two notations in a graph'''
+    s = []
+    s.append(start)
+    
+    while(len(s) > 0):
+        curr = s[-1]
+        del s[-1]
+        
+        if curr == end:
+            return True
+        else:
+            # edge dir: child -> parent
+            next_steps = find_edge(curr, graph)
+            s.extend(next_steps)
+            
+    return False
+            
 
 
 def back_track(curr_node):
@@ -123,6 +141,15 @@ def find_common_ancestor(node1, node2):
 
     return None
 
+def find_all_goals(start, goal_notations, graph):
+    '''find all possible goal notations'''
+    possible_goals = []
+    for goal in goal_notations:
+        if related_notation(start, goal) or related_notation(goal, start):
+            possible_goals.append(goal)
+            
+    return possible_goals
+    
 
 
 
