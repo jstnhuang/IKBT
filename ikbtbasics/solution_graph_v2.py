@@ -52,6 +52,9 @@ def goal_search(start, parent_notations, graph):
             q.extend(next_steps)
             
     return None
+    
+def find_all_goals(start, goal_notations, graph):
+    pass
         
 def find_edge(child, graph):
     next_level = []
@@ -223,17 +226,28 @@ class Node:
             # trimmed the infeasible pairs from last step (redundency detection)
             
 
-            if len(self.parents) > 1:
-                common_ancestor = find_common_ancestor()
             
-            # parents_notation_list = []
+            parents_notation_list = []
             
             
             
-            # if len(self.parents) == 1: 
-            #     # convert to single symbol to list
-            #     for one_sym in self.parents[0].sol_notations:
-            #         parents_notation_list.append([one_sym])
+            if len(self.parents) == 1: 
+                # convert to single symbol to list
+                for one_sym in self.parents[0].sol_notations:
+                    parents_notation_list.append([one_sym])
+                    
+            # here we're making an assumption that after pruning most variables have
+            # at most 2 parents. We haven't encounter a test case where a variable has 
+            # 3 "direct" parents, though there's a slight possibility.
+            
+            else:
+                parent0 = self.parents[0]
+                parent1 = self.parents[1]
+                common_ancestor = find_common_ancestor(parent0, parent1)
+                
+                for p
+                
+                
             # elif len(self.parents) == 2:
             #     parents_notation_list = itt.product(self.parents[0].sol_notations, \
             #                             self.parents[1].sol_notations)
