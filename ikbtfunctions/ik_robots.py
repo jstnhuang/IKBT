@@ -29,7 +29,7 @@ from ikbtbasics.ik_classes import *     # special classes for Inverse kinematics
 def robot_params(name):
     pvals = {}   # null for most robots
     List = ['Puma', 'Chair_Helper', 'Wrist', 'MiniDD', 'Olson13','Stanford', 'Sims11', 'Srisuan11', 'Axtman13', \
-            'Mackler13', 'Minder13', 'Palm13', 'Parkman13', ]
+            'Mackler13', 'Minder13', 'Palm13', 'Parkman13']
     assert (name in List), 'robot_params(): Unknown robot, ' + name + ', Stopping'
     
     if(name == 'Puma'):

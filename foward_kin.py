@@ -93,6 +93,7 @@ pvals = {l_3: 5, l_4:2}
 #   Check for a pickle file of pre-computed Mech object. If the pickle
 #       file is not there, compute the kinematic equations
 
+# using pickle
 testing = False
 [M, R, unknowns] = kinematics_pickle(robot, dh, params, pvals, vv, unknowns, testing)
 print 'GOT HERE: robot name: ', R.name
@@ -100,3 +101,8 @@ print 'GOT HERE: robot name: ', R.name
 R.name = robot
 R.params = params
 
+# not using pickle
+m = kc.mechanism(dh, params, vv)
+m.pvals = pvals  # store numerical values of parameters
+m.forward_kinematics()
+print "Completed Forward Kinematics"
