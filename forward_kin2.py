@@ -1,6 +1,6 @@
 !/usr/bin/python
 #
-#     Test for full IK solutions of know robot(s)
+#     This script only compute the forward kinematics part
 
 # Copyright 2017 University of Washington
 
