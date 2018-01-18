@@ -65,41 +65,36 @@ sp.var('Px Py Pz')
 
 ########################################################    NEW Style robot param setups
 
-# robot example
+
+if len(argv) == 1:  # no argument - use default
+    #robot = 'Gomez'
+    #robot = 'Puma'
+    #robot = 'Chair_Helper'
+    #robot = 'Khat6DOF'
+    robot = 'Wrist' 
+    
+elif len(argv) == 2:
+    robot = str(argv[1]) 
+        
+print ''
+print ''
+print '             Working on '+robot
+print ''
+print ''
+
+#   Get the robot model 
+[dh, vv, params, pvals, unknowns] = robot_params(robot)  # see ik_robots.py 
 
 #
-#    UW BRL Mini Direct Drive Robot, 5-DOF
+#     Set up robot equations for further solution by BT
 #
-robot = 'MiniDD'
-dh = sp.Matrix([
-    [    0     ,     0  , d_1   ,  0    ],
-    [ -sp.pi/2 ,     0  ,   0   , th_2  ],
-    [ -sp.pi/2 ,   l_3  ,   0   , th_3  ],
-    [ -sp.pi/2 ,     0  , l_4   , th_4  ],
-    [ -sp.pi/2 ,     0  ,   0   , th_5  ],
-    [   0      ,     0  ,   0   ,   0   ]     
-    ])
-vv = [0,1,1,1,1]
+#   Check for a pickle file of pre-computed Mech object. If the pickle
+#       file is not there, compute the kinematic equations
 
-variables = [unknown(d_1), unknown(th_2), unknown(th_3), unknown(th_4), unknown(th_5) ]
+testing = False
+[M, R, unknowns] = kinematics_pickle(robot, dh, params, pvals, vv, unknowns, testing)
 
-params = [l_3, l_4]
-pvals = {l_3: 5, l_4:2}
-
-
-use_pickle = False
-
-if use_pickle:
-
-    # using pickle
-    testing = False
-    [M, R, unknowns] = kinematics_pickle(robot, dh, params, pvals, vv, unknowns, testing)
-    print 'GOT HERE: robot name: ', R.name
-
-    M.forward_kinematics()
-else:
-    # not using pickle
-    m = kc.mechanism(dh, params, vv)
-    m.pvals = pvals  # store numerical values of parameters
-    m.forward_kinematics()
-    print "Completed Forward Kinematics"
+##   check the pickle in case DH params were changed
+dhp = M.DH
+check_the_pickle(dhp, dh)   # check that two mechanisms have identical DH params
+ 
