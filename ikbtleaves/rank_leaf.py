@@ -44,9 +44,9 @@ class rank(b3.Action):
         # only invokes comparisions when solved by both solvers
         if u.solvable_sincos and u.solvable_tan:
             # less number of solutions is better
-            if (len(u.sincos_solutions) < len(u.tan_solutions)) and (len(u.sincos_solutions) > 0):
+            if (len(u.sincos_solutions) < len(u.tan_solutions)):
                 choosen = "sincos"
-            elif (len(u.sincos_solutions) > len(u.tan_solutions)) and (len(u.tan_solutions) > 0):
+            elif (len(u.sincos_solutions) > len(u.tan_solutions)):
                 choosen = "tan"
             else:
                 # if the number of solutions are the same, countinue

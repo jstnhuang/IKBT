@@ -119,10 +119,13 @@ class sub_transform(b3.Action):    # action leaf for
             for i in rows:
                 for j in cols:
                     e2 = R.mequation_list[m].Ts[i,j]
-                    for k in rows:
+                    for k in (i, rows):
                         for l in cols:
                             e1 = R.mequation_list[m].Ts[k,l]
+                            if e1 == e2:
+                                continue
                             # substitute with e1 or -e1      ####################################3    *******    adapt ".has" to both LHS and RHS??
+                            
                             if((e1 != e2) and e2 != z and e2.has(e1)):  # we found a substitution
                                 if(self.BHdebug):
                                     print ''
