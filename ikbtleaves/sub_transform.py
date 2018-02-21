@@ -90,6 +90,7 @@ class sub_transform(b3.Action):    # action leaf for
     def tick(self, tick):
         unknowns = tick.blackboard.get('unknowns')   # the current list of unknowns
         R = tick.blackboard.get('Robot')   # the current robot instance
+        
         if(self.BHdebug):
             print "running: ", self.Name
             print 'number of matrix equations: ', len(R.mequation_list)
@@ -126,7 +127,7 @@ class sub_transform(b3.Action):    # action leaf for
                                 continue
                             # substitute with e1 or -e1      ####################################3    *******    adapt ".has" to both LHS and RHS??
                             
-                            if((e1 != e2) and e2 != z and e2.has(e1)):  # we found a substitution
+                            if e2 != z and e2.has(e1):  # we found a substitution
                                 if(self.BHdebug):
                                     print ''
                                     print self.Name, ' found a sub transform (+)'
@@ -142,7 +143,7 @@ class sub_transform(b3.Action):    # action leaf for
                                     R.mequation_list[m].Ts[i,j] = new
                                     found = True
                                         
-                            elif((e1 != e2) and e2 != z and e2.has(-e1)):  # we found a substitution -e1
+                            elif e2 != z and e2.has(-e1):  # we found a substitution -e1
                                 if(self.BHdebug):
                                     print self.Name, ' found a (-) sub transform'
                                     print e1, '/',  e2
@@ -155,7 +156,11 @@ class sub_transform(b3.Action):    # action leaf for
                                 if(nnew < nold):
                                     R.mequation_list[m].Ts[i,j] = new
                                     found = True
-                                
+                            # advanced substitution test
+                            # only when e2 has all e1's symbols
+                            elif (set(e1.free_symbols)).issubset(set(e2.free_symbols)):
+
+
                                         
         if found:
             #  put the tmp_eqns list back into R !!!!  ******************************
