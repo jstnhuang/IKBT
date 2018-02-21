@@ -90,7 +90,8 @@ class sub_transform(b3.Action):    # action leaf for
     def tick(self, tick):
         unknowns = tick.blackboard.get('unknowns')   # the current list of unknowns
         R = tick.blackboard.get('Robot')   # the current robot instance
-        
+        params = R.params # get the list of symbolic parameters
+
         if(self.BHdebug):
             print "running: ", self.Name
             print 'number of matrix equations: ', len(R.mequation_list)
@@ -156,9 +157,24 @@ class sub_transform(b3.Action):    # action leaf for
                                 if(nnew < nold):
                                     R.mequation_list[m].Ts[i,j] = new
                                     found = True
-                            # advanced substitution test
+                            # advanced substitution test (we get here when Sympy couldn't recognize
+                            # expressions that are not in regular order, e.g. 
+                            # r1 = a + b, r2 = a*c + d + b*c, r2 contains r1, but not being picked up
+                            # by sympy)
                             # only when e2 has all e1's symbols
                             elif (set(e1.free_symbols)).issubset(set(e2.free_symbols)):
+                                for a_parameter in params:
+                                    e2_extracted = e2.factor(a_parameter)
+                                    nold = count_unknowns(unknowns, e2)
+                                    if e2_extracted.has(e1):
+                                        new = e2_extracted.subs(e1, R.mequation_list[m].Td[k,l])   # substituion
+                                    if e2_extracted.has(-e1):
+                                        new = e2_extracted.subs(-e1, -R.mequation_list[m].Td[k,l])
+                                    nnew = count_unknowns(unknowns, new)
+                                    if nnew < nold:
+                                        R.mequation_list[m].Ts[i,j] = new
+                                        found = True
+                                        break
 
 
                                         
