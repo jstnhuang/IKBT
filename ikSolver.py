@@ -400,13 +400,7 @@ if(robot == 'Chair_Helper'):
             assert(u.nsolutions == 1), fs+' n(d_1)'
             print str(u.solutions[0])
             assert(u.solutions[0] == Pz - l_4*r_33), fs + '  [d_1]'
-        if(u.symbol == th_2):
-            ntests += 1
-            assert(u.nsolutions == 2), fs+' n(th_2)'
-            print str(u.solutions[0]) + ', ' + str(u.solutions[1])
-            assert(u.solutions[0] ==  sp.asin((Px-l_1-l_4*r_13)/l_2) ), fs + ' [th_2a]'
-            assert(u.solutions[1] == -sp.asin((Px-l_1-l_4*r_13)/l_2)+sp.pi ), fs + ' [th_2b]'
-
+        
 
 ntests = 0
 ##  Test Assertions
