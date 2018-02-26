@@ -127,7 +127,7 @@ class sub_transform(b3.Action):    # action leaf for
                             if e1 == e2:
                                 continue
                             # substitute with e1 or -e1      ####################################3    *******    adapt ".has" to both LHS and RHS??
-                            
+                            new = None
                             if e2 != z and e2.has(e1):  # we found a substitution
                                 if(self.BHdebug):
                                     print ''
@@ -163,14 +163,16 @@ class sub_transform(b3.Action):    # action leaf for
                             # by sympy)
                             # only when e2 has all e1's symbols
                             elif (set(e1.free_symbols)).issubset(set(e2.free_symbols)):
+                                nnew = 100
                                 for a_parameter in params:
                                     e2_extracted = e2.factor(a_parameter)
                                     nold = count_unknowns(unknowns, e2)
                                     if e2_extracted.has(e1):
                                         new = e2_extracted.subs(e1, R.mequation_list[m].Td[k,l])   # substituion
+                                        nnew = count_unknowns(unknowns, new)
                                     if e2_extracted.has(-e1):
                                         new = e2_extracted.subs(-e1, -R.mequation_list[m].Td[k,l])
-                                    nnew = count_unknowns(unknowns, new)
+                                        nnew = count_unknowns(unknowns, new)
                                     if nnew < nold:
                                         R.mequation_list[m].Ts[i,j] = new
                                         found = True
